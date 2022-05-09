@@ -1,0 +1,19 @@
+{
+  "version": "16.0.0",
+  "files": {
+    "4b8ae78bf77fa5e907cb97260a858829b12ad1b70dcf2ce15c074052f4d9bfd4": {
+      "source": {
+        "path": "DataPipelineFoundationsStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "4b8ae78bf77fa5e907cb97260a858829b12ad1b70dcf2ce15c074052f4d9bfd4.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
