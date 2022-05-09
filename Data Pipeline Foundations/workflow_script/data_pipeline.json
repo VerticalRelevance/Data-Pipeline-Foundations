@@ -1,0 +1,70 @@
+{
+    "Comment": "A description of my state machine",
+    "StartAt": "Raw to Transformed Jobs",
+    "States": {
+      "Raw to Transformed Jobs": {
+        "Type": "Parallel",
+        "Branches": [
+          {
+            "StartAt": "customer_data table",
+            "States": {
+              "customer_data table": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::glue:startJobRun.sync",
+                "Parameters": {
+                  "JobName": "transformed_customer_data_table"
+                },
+                "End": true
+              }
+            }
+          },
+          {
+            "StartAt": "transactions table",
+            "States": {
+              "transactions table": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::glue:startJobRun.sync",
+                "Parameters": {
+                  "JobName": "transformed_transactions_table"
+                },
+                "End": true
+              }
+            }
+          }
+        ],
+        "Next": "Transformed to Curated Jobs"
+      },
+      "Transformed to Curated Jobs": {
+        "Type": "Parallel",
+        "End": true,
+        "Branches": [
+          {
+            "StartAt": "customer_data_USA table",
+            "States": {
+              "customer_data_USA table": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::glue:startJobRun",
+                "Parameters": {
+                  "JobName": "curated_customer_data_table"
+                },
+                "End": true
+              }
+            }
+          },
+          {
+            "StartAt": "transactions table curated",
+            "States": {
+              "transactions table curated": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::glue:startJobRun",
+                "Parameters": {
+                  "JobName": "curated_transactions_table"
+                },
+                "End": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
